@@ -1,0 +1,7 @@
+rebuild_master:
+  steps:
+    - rebuild_package:
+        project: home:Psheng
+        package: v2ray-rules-dat
+  filters:
+    event: push
