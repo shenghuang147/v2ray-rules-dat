@@ -20,6 +20,8 @@ jobs:
           ORIGIN_TAG=$(curl -s https://api.github.com/repos/Loyalsoldier/v2ray-rules-dat/tags | jq -r '.[0].name')
           if [[ "$CURRENT_TAG" != "$ORIGIN_TAG" ]]; then
             echo $ORIGIN_TAG > CURRENT_TAG
+            git config user.name github-actions
+            git config user.email github-actions@github.com
             git add CURRENT_TAG
             git commit -m "current tag: $ORIGIN_TAG"
             git push origin master
