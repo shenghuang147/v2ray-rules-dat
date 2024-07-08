@@ -1,0 +1,29 @@
+name: Check Tag
+on:
+  schedule:
+    - cron: '0 23 * * *'
+  workflow_dispatch: # on button click
+
+jobs:
+  check-tag:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: 'recursive'
+          
+      - name: Check Tag
+        run: |
+          CURRENT_TAG=$(cat CURRENT_TAG)
+          cd v2ray-rules-dat
+          ORIGIN_TAG=$(curl -s https://api.github.com/repos/Loyalsoldier/v2ray-rules-dat/tags | jq -r '.[0].name')
+          cd ..
+          if [[ "$CURRENT_TAG" != "$ORIGIN_TAG" ]]; then
+            echo $ORIGIN_TAG > CURRENT_TAG
+            git add CURRENT_TAG
+            git commit -m "current tag: $ORIGIN_TAG"
+            git push origin master
+          fi
+

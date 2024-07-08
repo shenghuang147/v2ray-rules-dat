@@ -1,7 +1,5 @@
-rebuild_master:
+workflow:
   steps:
-    - rebuild_package:
+    - trigger_services:
         project: home:Psheng
         package: v2ray-rules-dat
-  filters:
-    event: push
