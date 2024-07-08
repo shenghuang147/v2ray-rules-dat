@@ -17,9 +17,7 @@ jobs:
       - name: Check Tag
         run: |
           CURRENT_TAG=$(cat CURRENT_TAG)
-          cd v2ray-rules-dat
           ORIGIN_TAG=$(curl -s https://api.github.com/repos/Loyalsoldier/v2ray-rules-dat/tags | jq -r '.[0].name')
-          cd ..
           if [[ "$CURRENT_TAG" != "$ORIGIN_TAG" ]]; then
             echo $ORIGIN_TAG > CURRENT_TAG
             git add CURRENT_TAG
